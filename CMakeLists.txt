@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.13)
+project(cpp_project)
+add_executable(cpp_project main.cpp)
+# target_link_directories(cpp_project PRIVATE ${CMAKE_SOURCE_DIR}/sdk/cpp/build/)
+target_link_libraries(cpp_project basicmath)
