@@ -1,3 +1,3 @@
 #! /bin/sh
 
-cd build; ./cpp_project
+cd build; ./CPP_PROJECT

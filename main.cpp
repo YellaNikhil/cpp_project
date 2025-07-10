@@ -2,8 +2,12 @@
 #include<string>
 #include "sdk/cpp/adder.h"
 #include <GLFW/glfw3.h>
+#include "CPP_PROJECTConfig.h"
 
 int main(){
+
+    std::cout << "Version: " << CPP_PROJECT_VERSION_MAJOR << "." << CPP_PROJECT_VERSION_MINOR << "\n";
+
     GLFWwindow* window;
     /* Init GLFW */
     if (!glfwInit())

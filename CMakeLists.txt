@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.13)
-project(cpp_project)
-add_executable(cpp_project main.cpp)
+
+project(CPP_PROJECT VERSION 1.0)
+
+configure_file(${PROJECT_NAME}Config.h.in ${PROJECT_NAME}Config.h)
+
+add_executable(${PROJECT_NAME} main.cpp)
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR})
 
 # ---------------- DOWNLOAD ALL THE SUBMODULES ------------------
 find_package(Git QUIET)
@@ -21,7 +27,7 @@ endif()
 add_subdirectory(sdk/cpp)
 
 add_subdirectory(external/glfw)
-# target_link_directories(cpp_project PRIVATE ${CMAKE_SOURCE_DIR}/sdk/cpp/build/)
+
 target_include_directories(${PROJECT_NAME} 
     PRIVATE sdk/app
     PRIVATE external/glfw/include)
@@ -30,4 +36,4 @@ target_link_directories(${PROJECT_NAME}
     PRIVATE sdk/app
     PRIVATE external/glfw/src)
 
-target_link_libraries(cpp_project basicmath glfw)
+target_link_libraries(${PROJECT_NAME} basicmath glfw)
