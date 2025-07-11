@@ -1,8 +1,10 @@
 #include<iostream>
 #include<string>
-#include "sdk/cpp/adder.h"
 #include <GLFW/glfw3.h>
-#include "CPP_PROJECTConfig.h"
+#include <CPP_PROJECTConfig.h>
+#ifdef USE_ADDER
+    #include "adder.h"
+#endif
 
 int main(){
 
@@ -21,7 +23,11 @@ int main(){
     }
 
     std::cout << "Hello World\n";
-    std::cout << basicmath::add(2, 2) << std::endl;
+#ifdef USE_ADDER
+    std::cout << "Using Adder: " << basicmath::add(2.0f, 2.43f) << std::endl;
+#else 
+    std::cout << "Not using adder: " << 2 + 2 << std::endl;
+#endif
     for (;;)
     {
 

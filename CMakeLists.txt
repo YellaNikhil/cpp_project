@@ -2,6 +2,17 @@ cmake_minimum_required(VERSION 3.13)
 
 project(CPP_PROJECT VERSION 1.0)
 
+option(USE_ADDER "To use adder library which adds two variables of interger or float" ON)
+
+if(USE_ADDER)
+    add_subdirectory(sdk/cpp)
+
+    list(APPEND EXTRA_INCLUDES_DIR "sdk/app")
+    list(APPEND EXTRA_LINK_DIR "sdk/app")
+    list(APPEND EXTRA_LINK_LIBS basicmath)
+
+endif()
+
 configure_file(${PROJECT_NAME}Config.h.in ${PROJECT_NAME}Config.h)
 
 add_executable(${PROJECT_NAME} main.cpp)
@@ -24,16 +35,21 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     endif()
 endif()
 
-add_subdirectory(sdk/cpp)
-
 add_subdirectory(external/glfw)
 
+#To include the header files to the target. specify how they accessible by PUBLIC or PRIVATE
+# PUBLIC - .h or source files are accessible and used for building the target.
+# PRIVATE - .h or source files are not accessible. but only used for building the target.
 target_include_directories(${PROJECT_NAME} 
-    PRIVATE sdk/app
-    PRIVATE external/glfw/include)
+    PRIVATE external/glfw/include
+    ${EXTRA_INCLUDES_DIR}    
+)
 
+
+#To link the SOURCE file directories to the target. specify how they accessible by PUBLIC or PRIVATE
 target_link_directories(${PROJECT_NAME} 
-    PRIVATE sdk/app
-    PRIVATE external/glfw/src)
+    PRIVATE external/glfw/src
+    ${EXTRA_LINK_DIR}
+)
 
-target_link_libraries(${PROJECT_NAME} basicmath glfw)
+target_link_libraries(${PROJECT_NAME} ${EXTRA_LINK_LIBS} glfw)
