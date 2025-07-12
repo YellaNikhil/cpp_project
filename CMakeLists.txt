@@ -2,6 +2,16 @@ cmake_minimum_required(VERSION 3.13)
 
 project(CPP_PROJECT VERSION 1.0)
 
+#finding library in the system to be used in the project
+find_library(myglewlib glew NAMES glew2 GLEW DOC "OpenGL Extension Wrangler")
+
+if(${myglewlib} STREQUAL myglewlib-NOTFOUND)
+    message(FATAL_ERROR "Glew library not found! stoppping the cmake execution")
+else()
+    message(STATUS "Glew library found! Prashantham")
+endif()
+
+#adder library usage enable logic
 option(USE_ADDER "To use adder library which adds two variables of interger or float" ON)
 
 if(USE_ADDER)
@@ -52,4 +62,4 @@ target_link_directories(${PROJECT_NAME}
     ${EXTRA_LINK_DIR}
 )
 
-target_link_libraries(${PROJECT_NAME} ${EXTRA_LINK_LIBS} glfw)
+target_link_libraries(${PROJECT_NAME} ${EXTRA_LINK_LIBS} glfw ${myglewlib})
